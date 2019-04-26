@@ -92,3 +92,9 @@ variable "codebuild_badge_enabled" {
   description = "Generates a publicly-accessible URL for the projects build badge"
   default     = "true"
 }
+
+# var.codebuild_timeout
+variable "codebuild_timeout" {
+  description = "Set the timeout for codebuild"
+  default     = "5"
+}

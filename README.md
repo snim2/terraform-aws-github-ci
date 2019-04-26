@@ -130,6 +130,11 @@ The following variables can be configured:
                    badge
 - **Default**: `true`
 
+#### `codebuild_timeout`
+
+- **Description**: CodeBuild timeout
+- **Default**: `5`
+
 ### Outputs
 
 The following outputs are exported:
