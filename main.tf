@@ -100,7 +100,7 @@ resource "aws_s3_bucket" "_" {
 resource "aws_codebuild_project" "_" {
   name = "${var.github_repository}"
 
-  build_timeout = "5"
+  build_timeout = "${var.codebuild_timeout}"
   service_role  = "${aws_iam_role.codebuild.arn}"
   badge_enabled = "${var.codebuild_badge_enabled}"
 
