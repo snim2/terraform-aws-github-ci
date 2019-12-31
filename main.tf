@@ -33,7 +33,7 @@ data "aws_region" "_" {}
 data "template_file" "codebuild_source_location" {
   template = "https://github.com/$${owner}/$${repository}.git"
 
-  vars {
+  vars = {
     owner      = "${var.github_owner}"
     repository = "${var.github_repository}"
   }
@@ -47,7 +47,7 @@ data "template_file" "codebuild_source_location" {
 data "template_file" "codebuild_iam_policy" {
   template = "${file("${path.module}/iam/policies/codebuild.json")}"
 
-  vars {
+  vars = {
     bucket = "${aws_s3_bucket._.bucket}"
   }
 }
@@ -120,7 +120,13 @@ resource "aws_codebuild_project" "_" {
     type                 = "LINUX_CONTAINER"
     image                = "${var.codebuild_image}"
     privileged_mode      = "${var.codebuild_privileged_mode}"
-    environment_variable = "${var.codebuild_environment_variables}"
+    dynamic "environment_variable" {
+      for_each = var.codebuild_environment_variables
+      content {
+        name  = environment_variable.value.name
+        value = environment_variable.value.value
+      }
+    }
   }
 
   artifacts {
